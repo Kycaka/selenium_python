@@ -1,9 +1,11 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-
 import time
 import random
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+from locators.locators import Auth
+
 
 base_url = 'https://www.saucedemo.com'
 
@@ -23,16 +25,13 @@ with webdriver.Chrome(service=service) as driver:
     try:
         driver.get(url=base_url)
 
-        user_name = driver.find_element(By.XPATH, '//input[@id="user-name"]')
+        user_name = driver.find_element(Auth.user_name)
         user_name.send_keys(f'{random.choice(users_list)}')
 
-        password = driver.find_element(By.CSS_SELECTOR, '#password')
+        password = driver.find_element(Auth.password)
         password.send_keys('secret_sauce')
 
-        login_button = driver.find_element(
-            By.XPATH,
-            '//input[@id="login-button"]'
-        )
+        login_button = driver.find_element(Auth.login_button)
         login_button.click()
 
         time.sleep(3)
